@@ -1,0 +1,18 @@
+{
+  "name": "Stopwatch",
+  "version": "1.1",
+  "description": "Stop Watch Application. Simple Stop Watch. Very Fast Stopper with Part Time.",
+  "launch_path": "/index.html",
+  "icons": {
+    "256": "/img/256.png",
+    "128": "/img/128.png",
+    "60": "/img/60.png",
+    "48": "/img/48.png",
+    "16": "/img/16.png"
+  },
+  "developer": {
+    "name": "Blatt Dávid",
+    "url": "https://github.com/blattusz/StopWatch1.1"
+  },
+  "default_locale": "en"
+}

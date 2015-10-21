@@ -1,0 +1,204 @@
+<html>
+<head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style/buttons.css" rel="stylesheet" type="text/css"/>
+        <style>
+            @font-face
+            {
+                font-family: BlattuszFont;
+                src: url(blattfont.ttf);
+            }
+        </style>
+
+        
+        
+<script language="JavaScript">
+
+     timerID = 0;
+     tStart = null;
+     most = Date();
+    k = 0;
+    kattintas = 0;
+
+    function UpdateTimer() {
+        if (timerID) {
+            clearTimeout(timerID);
+            clockID = 0;
+        }
+
+        if (!tStart)
+            tStart = new Date();
+
+        var tDate = new Date();
+        var tDiff = tDate.getTime() - tStart.getTime();
+
+        tDate.setTime(tDiff);
+        
+        dkiir=[""+tDate.getHours(),""+tDate.getMinutes(),""+tDate.getSeconds(),""+tDate.getMilliseconds()];
+
+        if(parseInt(dkiir[0]) < 10)
+        {
+            dkiir[0] = "0" + parseInt(tDate.getHours()-1);
+        }
+        else
+        {
+            dkiir[0] = "" + parseInt(tDate.getHours()-1);
+        }
+        
+        if(parseInt(dkiir[1]) < 10)
+        {
+            dkiir[1] = "0" + tDate.getMinutes();
+        }
+        else
+        {
+            dkiir[1] = "" + tDate.getMinutes();
+        }
+        
+                if(parseInt(dkiir[2]) < 10)
+        {
+            dkiir[2] = "0" + tDate.getSeconds();
+        }
+        else
+        {
+            dkiir[2] = "" + tDate.getSeconds();
+        }
+
+         if(parseInt(dkiir[3]) < 100)
+        {
+            dkiir[3] = "0" + parseInt(tDate.getMilliseconds());
+        }
+        else if(parseInt(dkiir[3]) < 10)
+        {
+            dkiir[3] = "0" + parseInt(tDate.getMilliseconds());
+        }
+        else
+        {
+            dkiir[3] = "" + parseInt(tDate.getMilliseconds());
+        }
+
+       kiir("stopperh",dkiir[0]+ ":");
+       kiir("stopperm",dkiir[1]+ ":");
+       kiir("stoppers",dkiir[2]+ ":");
+       kiir("stopperms",dkiir[3]);
+
+        timerID = setTimeout("UpdateTimer()", 100);
+    }
+    
+function kiir(hova, mit)
+{
+    document.getElementById(hova).innerHTML = mit;
+}
+
+function StartStop()
+{
+       kattintas++;
+       if(kattintas === 1)
+        {
+            tStart = new Date();
+            kiir("stopperh","00:");
+            kiir("stopperm","00:");
+            kiir("stoppers","00:");
+            kiir("stopperms","00");
+            timerID = setTimeout("UpdateTimer()", 100);
+        }
+
+        if(kattintas % 2 === 0)
+        {
+            tStart = new Date();
+            clearTimeout(timerID);
+            ora = [dkiir[0],dkiir[1],dkiir[2],dkiir[3]];
+        }
+        
+        if(kattintas % 2 !== 0 && kattintas !== 1)
+        {
+            timerID = setTimeout("UpdateTimer()", 100);   
+        }
+}
+
+function Reset()
+    {
+       if(kattintas % 2 === 0 && kattintas !== 0)
+       {
+           kattintas = 0;
+           tStart = null;
+           timerID = 0;
+           location.reload();
+       }
+    }
+function StopperAlap()
+{
+      kiir("stopperh","00:");
+      kiir("stopperm","00:");
+      kiir("stoppers","00:");
+      kiir("stopperms","00");
+}
+
+function Reszido()
+{
+        localStorage.setItem("item" + k,dkiir[0] +":"+ dkiir[1] +":"+ dkiir[2] +":"+ dkiir[3]);
+        kiir("item"+k,localStorage.getItem("item"+ k));
+         k++;
+}
+
+
+</script>
+
+
+
+</head>
+
+<body onload="StopperAlap()" onunload="StartStop()">
+    <center><form name="theTimer">
+        <table style="width: 100%; height: 100%; background-image: url('hatter.jpg'); ">
+            
+            <tr style="height: 10%; width: 100%; background-color: black; opacity: 0.7; ">
+                <td colspan="3" width="100%" align="center" style="border-bottom: 3px solid #fff; ">
+                    <table style="width: 20%;table-layout: fixed; ">
+                        <tr style="width: 100%; ">
+                            <td style="width:25%; align: center; margin: 0px 0px 0px 0px; text-align: center;">
+                                 <div id="stopperh" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                            <td style="width:25%; align: center; margin: 0px 0px 0px 0px;text-align: center;">
+                                 <div id="stopperm" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                            <td style="width:25%; align: center; margin: 0px 0px 0px 0px;text-align: center;">
+                                 <div id="stoppers" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                            <td style="width:25%; align: center; margin: 0px 0px 0px 0px;text-align: center;">
+                                 <div id="stopperms" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height: 70%; width: 100%;">
+                <td style="border-bottom: 3px solid #fff;" colspan="3" width="100%" align="center" valign="top" >
+                    <div id="item0" style="width: 100%; font-size: 20px; color: white; margin-top: 15px;"></div>
+                    <div id="item1" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item2" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item3" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item4" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item5" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item6" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item7" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item8" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item9" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                </td>
+            </tr>
+            <tr style="height: 10%; width: 100%;">
+                <td style="width: 33.33%;">
+                        <button type="button" onclick="Reszido()" style="font-size: small;font-weight: bold;">Részidő</button>
+                </td>
+                <td  style="width: 33.33%; ">
+                        <button type="button" onclick="StartStop()" style="font-size: small;font-weight: bold;">START/PAUSE</button>
+                </td>
+                <td style="width: 33.33%;">
+                        <button type="button" onclick="Reset()" style="font-size: small;font-weight: bold;">RESET</button>
+                </td>
+            </tr>
+        </table>
+            </form></center>
+    </body>
+    </html>

@@ -1,0 +1,241 @@
+<html>
+<head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style/buttons.css" rel="stylesheet" type="text/css"/>
+        <style>
+            @font-face
+            {
+                font-family: BlattuszFont;
+                src: url(blattfont.ttf);
+            }
+            html, body{
+                margin: 0px 0px 0px 0px;
+                background: fixed;
+                background-image: url('img/hatter.jpg');
+             }
+             #1,#2 {
+                 background-color: #006579;
+             }
+        </style>
+
+        
+        
+<script language="JavaScript">
+
+     timerID = 0;
+     tStart = null;
+     most = Date();
+    k = 0;
+    kattintas = 0;
+    milisec = 0;
+    sec = 0;
+    min = 0;
+    h = 0;
+    
+    
+    function UpdateTimer() {
+       milisec++;
+         
+       if(milisec === 10)
+       {
+           milisec = 0;
+           sec++;
+       }
+       if(sec === 60)
+       {
+           sec = 0;
+           min++;
+       }
+       if(min === 60)
+       {
+           min = 0;
+           h++;
+       }
+       
+       ido = [4];
+       
+       
+       if(milisec < 10)
+       {
+           ido[0] = milisec + "0";
+       }
+       else
+       {
+           ido[0] = milisec + "0";
+       }
+       
+       if(sec < 10)
+       {
+           ido[1] = "0" + sec;
+       }
+       else
+       {
+           ido[1] = sec;
+       }
+       if(min < 10)
+       {
+           ido[2] = "0" + min;
+       }
+       else
+       {
+           ido[2] = min;
+       }
+       
+       if(h < 10)
+       {
+           ido[3] = "0" + h;
+       }
+       else
+       {
+           ido[3] = h;
+       }
+       
+       
+       
+      
+       kiir("stopperh",ido[3] + ":");
+       kiir("stopperm",ido[2] + ":");
+       kiir("stoppers",ido[1] + ":");
+       kiir("stopperms",ido[0] + "");
+
+
+       timerID = setTimeout("UpdateTimer()", 100);
+
+    }
+    
+function kiir(hova, mit)
+{
+    document.getElementById(hova).innerHTML = mit;
+}
+
+function StartStop()
+{
+    document.getElementById("1").disabled = false;
+
+       kattintas++;
+       if(kattintas === 1)
+        {
+            tStart = new Date();
+            kiir("stopperh","00:");
+            kiir("stopperm","00:");
+            kiir("stoppers","00:");
+            kiir("stopperms","00");
+            timerID = setTimeout("UpdateTimer()", 100);
+        }
+
+        if(kattintas % 2 === 0)
+        {
+            document.getElementById("2").disabled = false;
+            szunet = new Date();
+            szs = szunet.getTime();
+            clearTimeout(timerID);
+            ora = [dkiir[0],dkiir[1],dkiir[2],dkiir[3]];
+
+        }
+        
+        if(kattintas % 2 !== 0 && kattintas !== 1)
+        {
+            sze =  new Date().getTime() - szs;
+            timerID = setTimeout("UpdateTimer()", 100);   
+        }
+}
+
+function Reset()
+    {
+       if(kattintas % 2 === 0 && kattintas !== 0)
+       {
+           kattintas = 0;
+           ms = sec = min = h = 0;
+           for(var i =0; i<k; i++)
+           {
+               localStorage.setItem("item" + i,"");
+               
+               localStorage.removeItem("item" + i);
+               kiir("item"+ i, "");
+           }
+           StopperAlap();
+           k = 0;
+       }
+    }
+function StopperAlap()
+{
+      kiir("stopperh","00:");
+      kiir("stopperm","00:");
+      kiir("stoppers","00:");
+      kiir("stopperms","00");
+      document.getElementById("1").disabled = true;
+      document.getElementById("2").disabled = true;
+}
+
+function Reszido()
+{
+     if(timerID > 0)
+    {
+        localStorage.setItem("item" + k,ido[3] +":"+ ido[2] +":"+ ido[1] +":"+ ido[0] + "0");
+        kiir("item"+k,"" + (k+1) + ".  " + localStorage.getItem("item"+ k) + "");
+         k++;
+     }
+}
+
+
+</script>
+
+
+</head>
+
+<body onload="StopperAlap()" onunload="StartStop()">
+    
+    <center><form name="theTimer">
+        <table style="width: 100%; height: 100%; ">
+            
+            <tr style="height: 10%; width: 100%; background-color: black; opacity: 0.7; ">
+                <td colspan="3" width="100%" align="center" style="border-bottom: 3px solid #fff; ">
+                    <table align="center" style="width: 100%;">
+                        <tr style="width: 100%;" align="center">
+                            <td style="width:26%; align: center; margin: 0px 0px 0px 0px; text-align: right;">
+                                 <div id="stopperh" style="font-family: BlattuszFont; font-size: 60px; color: white; "></div> 
+                            </td>
+                            <td style="width:26%; align: center; margin: 0px 0px 0px 0px;text-align: right;">
+                                 <div id="stopperm" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                            <td style="width:26%; align: center; margin: 0px 0px 0px 0px;text-align: right;">
+                                 <div id="stoppers" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                            <td style="width:22%; align: center; margin: 0px 0px 0px 0px;text-align: right;">
+                                 <div id="stopperms" style="font-family: BlattuszFont; font-size: 60px; color: white;"></div> 
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height: 70%; width: 100%;">
+                <td style="border-bottom: 3px solid #fff;" colspan="3" width="100%" align="center" valign="top" >
+                    <div id="item0" style="width: 100%; font-size: 20px; color: white; margin-top: 15px;"></div>
+                    <div id="item1" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item2" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item3" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item4" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item5" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item6" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item7" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item8" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                    <div id="item9" style="width: 100%; font-size: 20px; color: white;margin-top: 15px;"></div>
+                </td>
+            </tr>
+            <tr style="height: 10%; width: 100%;">
+                <td style="width: 33.33%;">
+                        <button id = "1" type="button" onclick="Reszido()" style="font-size: small;font-weight: bold;">PART TIME</button>
+                </td>
+                <td  style="width: 33.33%; ">
+                        <button type="button" onclick="StartStop()" style="font-size: small;font-weight: bold;">START/PAUSE</button>
+                </td>
+                <td style="width: 33.33%;">
+                        <button  id = "2" type="button" onclick="Reset()" style="font-size: small;font-weight: bold;">RESET</button>
+                </td>
+            </tr>
+        </table>
+            </form></center>
+    </body>
+    </html>
